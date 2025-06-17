@@ -1,22 +1,24 @@
-const { Client } = require("pg");
-const express = require("express");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
 
+dotenv.config();
 const app = express();
-app.use(express.json());
+const prisma = new PrismaClient();
+app.use(cors());
+app.use(
+  express.json({
+    limit: "100mb",
+  })
+);
 
-const connection = new Client({
-  host: "localhost",
-  user: "postgres",
-  password: "aditya@348",
-  port: 5432,
-  database: "employees",
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-connection
-  .connect()
-  .then(() => {
-    console.log("Connected");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
