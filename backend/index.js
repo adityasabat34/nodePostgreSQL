@@ -1,23 +1,27 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { registerUser, loginUser } from "./controllers/user.controller.js";
+import userRoutes from "./routes/user.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
+
 app.use(
   express.json({
     limit: "100mb",
   })
 );
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-app.get("/api/users");
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
