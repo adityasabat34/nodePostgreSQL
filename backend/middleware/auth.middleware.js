@@ -1,7 +1,7 @@
-import prisma from "../utils/prisma";
-import { ApiError } from "../utils/ApiError";
+import prisma from "../utils/prisma.js";
+import { ApiError } from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
-import { asyncHandler } from "../utils/asyncHandler";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
