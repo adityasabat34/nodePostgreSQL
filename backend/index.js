@@ -1,11 +1,10 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
+import { registerUser, loginUser } from "./controllers/user.controller.js";
 
 dotenv.config();
 const app = express();
-const prisma = new PrismaClient();
 app.use(
   cors({
     origin: "*",
@@ -18,9 +17,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.get("/api/users");
 
 const PORT = process.env.PORT || 5000;
 

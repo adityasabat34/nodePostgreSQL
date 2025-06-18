@@ -4,7 +4,13 @@ import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler";
 
 const protect = asyncHandler(async (req, res, next) => {
-  let token = req.cookies.jwt;
+  let token;
+
+  if (req.cookies?.jwt) {
+    token = req.cookies.jwt;
+  } else if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
   if (!token) {
     throw new ApiError(401, "Unauthorized - No token found");
