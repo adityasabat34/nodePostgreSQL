@@ -36,4 +36,12 @@ const protect = asyncHandler(async (req, res, next) => {
   next();
 });
 
-export { protect };
+const admin = (req, res, next) => {
+  if (req.user?.isAdmin === true) {
+    next();
+  } else {
+    throw new ApiError(403, "Forbidden - User is not an admin");
+  }
+};
+
+export { protect, admin };
